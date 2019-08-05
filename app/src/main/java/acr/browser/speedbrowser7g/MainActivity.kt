@@ -71,7 +71,7 @@ class MainActivity : BrowserActivity() {
                     }
 
                     override fun onFailure(call: Call<RssFeed>, t: Throwable) {
-                        Log.d("FEED", t.message)
+                        Log.d("FEED", "fail")
                     }
                 })
     }
