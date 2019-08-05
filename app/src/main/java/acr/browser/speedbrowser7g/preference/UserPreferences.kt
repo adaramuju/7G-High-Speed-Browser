@@ -10,6 +10,7 @@ import acr.browser.speedbrowser7g.preference.delegates.intPreference
 import acr.browser.speedbrowser7g.preference.delegates.stringPreference
 import acr.browser.speedbrowser7g.search.engine.GoogleSearch
 import acr.browser.speedbrowser7g.utils.FileUtils
+import android.app.Application
 import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,6 +20,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class UserPreferences @Inject constructor(
+    private val application: Application,
     @UserPrefs preferences: SharedPreferences,
     screenSize: ScreenSize
 ) {
@@ -57,7 +59,7 @@ class UserPreferences @Inject constructor(
 
     var searchChoice by preferences.intPreference(SEARCH, 1)
 
-    var searchUrl by preferences.stringPreference(SEARCH_URL, GoogleSearch().queryUrl)
+    var searchUrl by preferences.stringPreference(SEARCH_URL, GoogleSearch(application).queryUrl)
 
     var textReflowEnabled by preferences.booleanPreference(TEXT_REFLOW, false)
 
@@ -85,7 +87,7 @@ class UserPreferences @Inject constructor(
 
     var readingTextSize by preferences.intPreference(READING_TEXT_SIZE, 2)
 
-    var useTheme by preferences.intPreference(THEME, 0)
+    var useTheme by preferences.intPreference(THEME, 1)
 
     var textEncoding by preferences.stringPreference(TEXT_ENCODING, DEFAULT_ENCODING)
 

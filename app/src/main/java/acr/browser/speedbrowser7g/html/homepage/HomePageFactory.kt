@@ -25,12 +25,23 @@ class HomePageFactory @Inject constructor(
 
     override fun buildPage(): Single<String> = Single
         .just(searchEngineProvider.provideSearchEngine())
-        .map { (iconUrl, queryUrl, _) ->
+        .map { (iconUrl, queryUrl, _, feedsData) ->
             parse(homePageReader.provideHtml()) andBuild {
                 title { title }
                 charset { UTF8 }
                 body {
-                    id("image_url") { attr("src", iconUrl) }
+                    //id("image_url") { attr("src", iconUrl) }
+                    val repeatedElement = id("repeated").removeElement()
+                    id("content") {
+                        feedsData.forEach {
+                            appendChild(repeatedElement.clone {
+                                id("urlFeed") { attr("href", it.Url) }
+                                id("urlFeed") { text(it.Title) }
+                                id("websiteFeed") { text(it.Website) }
+                                id("descriptionFeed") { html(it.Description) }
+                            })
+                        }
+                    }
                     tag("script") {
                         html(
                             html()

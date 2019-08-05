@@ -19,6 +19,11 @@ data class HistoryEntry(
     val lastTimeVisited: Long = System.currentTimeMillis()
 ) : WebPage(url, title)
 
+data class FeedsModel (val Url: String,
+                       val Title: String,
+                       val Website: String,
+                       val Description: String)
+
 /**
  * A data type that represents an entity that has been bookmarked by the user or contains a page
  * that has been bookmarked by the user.

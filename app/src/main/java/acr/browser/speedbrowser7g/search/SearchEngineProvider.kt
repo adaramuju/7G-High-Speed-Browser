@@ -38,19 +38,19 @@ class SearchEngineProvider @Inject constructor(
      */
     fun provideSearchEngine(): BaseSearchEngine =
         when (userPreferences.searchChoice) {
-            0 -> CustomSearch(userPreferences.searchUrl)
-            1 -> GoogleSearch()
-            2 -> AskSearch()
-            3 -> BingSearch()
-            4 -> YahooSearch()
-            5 -> StartPageSearch()
-            6 -> StartPageMobileSearch()
-            7 -> DuckSearch()
-            8 -> DuckLiteSearch()
-            9 -> BaiduSearch()
-            10 -> YandexSearch()
-            11 -> NaverSearch()
-            else -> GoogleSearch()
+            0 -> CustomSearch(userPreferences.searchUrl, application)
+            1 -> GoogleSearch(application)
+            2 -> AskSearch(application)
+            3 -> BingSearch(application)
+            4 -> YahooSearch(application)
+            5 -> StartPageSearch(application)
+            6 -> StartPageMobileSearch(application)
+            7 -> DuckSearch(application)
+            8 -> DuckLiteSearch(application)
+            9 -> BaiduSearch(application)
+            10 -> YandexSearch(application)
+            11 -> NaverSearch(application)
+            else -> GoogleSearch(application)
         }
 
     /**
@@ -77,18 +77,18 @@ class SearchEngineProvider @Inject constructor(
      * Provide a list of all supported search engines.
      */
     fun provideAllSearchEngines(): List<BaseSearchEngine> = listOf(
-        CustomSearch(userPreferences.searchUrl),
-        GoogleSearch(),
-        AskSearch(),
-        BingSearch(),
-        YahooSearch(),
-        StartPageSearch(),
-        StartPageMobileSearch(),
-        DuckSearch(),
-        DuckLiteSearch(),
-        BaiduSearch(),
-        YandexSearch(),
-        NaverSearch()
+        CustomSearch(userPreferences.searchUrl, application),
+        GoogleSearch(application),
+        AskSearch(application),
+        BingSearch(application),
+        YahooSearch(application),
+        StartPageSearch(application),
+        StartPageMobileSearch(application),
+        DuckSearch(application),
+        DuckLiteSearch(application),
+        BaiduSearch(application),
+        YandexSearch(application),
+        NaverSearch(application)
     )
 
 }

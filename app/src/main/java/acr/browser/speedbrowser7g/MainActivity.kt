@@ -1,14 +1,27 @@
 package acr.browser.speedbrowser7g
 
 import acr.browser.speedbrowser7g.browser.activity.BrowserActivity
+import acr.browser.speedbrowser7g.database.FeedsModel
+import acr.browser.speedbrowser7g.database.feeds.FeedsDatabase
+import acr.browser.speedbrowser7g.html.homepage.RssService
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
+import androidx.annotation.WorkerThread
 import io.reactivex.Completable
+import me.toptas.rssconverter.RssConverterFactory
+import me.toptas.rssconverter.RssFeed
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import java.lang.Exception
 
 class MainActivity : BrowserActivity() {
 
@@ -28,6 +41,43 @@ class MainActivity : BrowserActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Handler().postDelayed({ getFeed() }, 100)
+    }
+
+    fun getFeed(){
+        val retrofit = Retrofit.Builder()
+                .baseUrl("https://www.diketahui.com")
+                .addConverterFactory(RssConverterFactory.create())
+                .build()
+
+        val service = retrofit.create(RssService::class.java)
+        service.getRss("/feed/")
+                .enqueue(object : Callback<RssFeed> {
+                    override fun onResponse(call: Call<RssFeed>, response: Response<RssFeed>) {
+                        if (!response.body()?.items.isNullOrEmpty()) {
+                            val feedDb = FeedsDatabase(application)
+                            feedDb.clearFeeds()
+
+                            try {
+                                for (item in response.body()?.items!!) {
+                                    feedDb.feedEntry(FeedsModel(item.link!!, item.title!!, "www.diketahui.com", item.description!!))
+                                }
+                                Log.d("FEEDD", tabsManager.currentTab?.isNewTab.toString())
+                                tabsManager.currentTab?.loadHomePage()
+                            }catch (e: Exception){
+                                Log.d("FEED", e.toString())
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RssFeed>, t: Throwable) {
+                        Log.d("FEED", t.message)
+                    }
+                })
     }
 
     override fun onNewIntent(intent: Intent) =

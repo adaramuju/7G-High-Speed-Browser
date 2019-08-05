@@ -26,7 +26,7 @@ class HistoryPageFactory @Inject constructor(
 
     override fun buildPage(): Single<String> = historyRepository
         .lastHundredVisitedHistoryEntries()
-        .map { list ->
+            .map { list ->
             parse(listPageReader.provideHtml()) andBuild {
                 title { title }
                 body {

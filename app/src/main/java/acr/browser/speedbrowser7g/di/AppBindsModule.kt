@@ -8,6 +8,8 @@ import acr.browser.speedbrowser7g.database.bookmark.BookmarkDatabase
 import acr.browser.speedbrowser7g.database.bookmark.BookmarkRepository
 import acr.browser.speedbrowser7g.database.downloads.DownloadsDatabase
 import acr.browser.speedbrowser7g.database.downloads.DownloadsRepository
+import acr.browser.speedbrowser7g.database.feeds.FeedsDatabase
+import acr.browser.speedbrowser7g.database.feeds.FeedsRepository
 import acr.browser.speedbrowser7g.database.history.HistoryDatabase
 import acr.browser.speedbrowser7g.database.history.HistoryRepository
 import acr.browser.speedbrowser7g.ssl.SessionSslWarningPreferences
@@ -35,6 +37,9 @@ abstract class AppBindsModule {
 
     @Binds
     abstract fun providesAllowListModel(sessionAllowListModel: SessionAllowListModel): AllowListModel
+
+    @Binds
+    abstract fun providesFeedsModel(feedsDatabase: FeedsDatabase): FeedsRepository
 
     @Binds
     abstract fun providesSslWarningPreferences(sessionSslWarningPreferences: SessionSslWarningPreferences): SslWarningPreferences
