@@ -21,7 +21,7 @@ class HomePageFactory @Inject constructor(
     private val homePageReader: HomePageReader
 ) : HtmlPageFactory {
 
-    private val title = application.getString(R.string.home)
+    private val title = "Homepage7G"
 
     override fun buildPage(): Single<String> = Single
         .just(searchEngineProvider.provideSearchEngine())

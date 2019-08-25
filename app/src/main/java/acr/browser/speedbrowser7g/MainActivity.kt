@@ -63,7 +63,12 @@ class MainActivity : BrowserActivity() {
                                     feedDb.feedEntry(FeedsModel(item.link!!, item.title!!, "www.diketahui.com", item.description!!))
                                 }
                                 Log.d("FEEDD", tabsManager.currentTab?.isNewTab.toString())
-                                tabsManager.currentTab?.loadHomePage()
+                                Log.d("FEEDD", tabsManager.currentTab?.title)
+                                Log.d("FEEDD", tabsManager.currentTab?.url)
+
+                                if(tabsManager.currentTab?.title.equals("Homepage7G", true)) {
+                                    tabsManager.currentTab?.loadHomePage()
+                                }
                             }catch (e: Exception){
                                 Log.d("FEED", e.toString())
                             }
